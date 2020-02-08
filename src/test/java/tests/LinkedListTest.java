@@ -34,7 +34,7 @@ public class LinkedListTest {
             actual.add(i);
             expected.add(i);
         }
-
+        
         listsEqual(expected, actual);
     }
 
@@ -59,5 +59,5 @@ public class LinkedListTest {
         expected.remove(expected.size() / 2);
 
         listsEqual(expected, actual);
-    }
+    }    
 }
