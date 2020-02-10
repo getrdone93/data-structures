@@ -5,20 +5,62 @@ import common.Node;
 public class LinkedList<E> {
 
     private Node<E> head;
-    private int length;
+    private Node<E> tail;
+    private int size;
 
-    public Node<E> add(E data) {
+    public LinkedList<E> addLast(E data) {
         if (this.head == null) {
             this.head = new Node<E>(data);
         } else {
-            Node<E> currentNode = this.head;
-            while (currentNode.getNext() != null) {
-                currentNode = currentNode.getNext();
+            if (this.tail == null) {
+                this.tail = new Node<E>(data);
+                this.head.setNext(this.tail);
+            } else {
+                this.tail.setNext(new Node<E>(data));
+                this.tail = this.tail.getNext();
             }
-            currentNode.setNext(new Node<E>(data));
         }
-        this.length++;
-        return this.head;
+        this.size++;
+        return this;
+    }
+
+    public LinkedList<E> addFirst(E data) {
+        if (this.head == null) {
+            this.head = new Node<E>(data);
+        } else {
+            Node<E> tempHead = new Node<>(this.head);
+            this.head = new Node<E>(data);
+            this.head.setNext(tempHead);
+        }
+        this.size++;
+        return this;
+    }
+
+    public E removeFirst() {
+        if (this.head == null) {
+            return null;
+        } else {
+            E data = this.head.getData();
+            this.head = this.head.getNext();
+            this.size--;
+            return data;
+        }
+    }
+
+    public E removeLast() {
+        if (this.head == null) {
+            return null;
+        } else {
+            if (this.tail == null) {
+                return removeFirst();
+            } else {
+                return this.remove(this.size - 1);
+            }
+        }
+    }
+
+    public LinkedList<E> add(E data) {
+        return addLast(data);
     }
 
     public E get(long index) {
@@ -33,10 +75,7 @@ public class LinkedList<E> {
 
     public E remove(long index) {
         if (index == 0) {
-            E copy = this.head.getData();
-            this.head = this.head.getNext();
-            this.length--;
-            return copy;
+            return removeFirst();
         } else {
             Node<E> copyHead = this.head;
             Node<E> previous = copyHead;
@@ -48,7 +87,10 @@ public class LinkedList<E> {
             }
             if (i == index && copyHead != null) {
                 previous.setNext(copyHead.getNext());
-                this.length--;
+                if (index == this.size - 1) {
+                    this.tail = previous;
+                }
+                this.size--;
                 return copyHead.getData();
             }
         }
@@ -57,17 +99,18 @@ public class LinkedList<E> {
     }
 
     public int size() {
-        return this.length;
+        return this.size;
     }
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder("[");
         Node<E> copyHead = this.head;
-        while (copyHead.getNext() != null) {
-            result.append(copyHead.getData());
+        while (copyHead != null) {
+            result.append(copyHead.getNext() == null ? copyHead.getData() : copyHead.getData() + ", ");
+            copyHead = copyHead.getNext();
         }
-
+        result.append("]");
         return result.toString();
     }
 }
