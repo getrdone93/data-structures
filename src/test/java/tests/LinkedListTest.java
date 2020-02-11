@@ -5,7 +5,25 @@ import org.junit.Assert;
 
 public class LinkedListTest {
 
-    private <E> void listsEqual(java.util.LinkedList<E> expected, list.LinkedList<E> actual) {
+    private java.util.LinkedList<Integer> getIncreasingJavaLinkedList(final int upperBound) {
+        java.util.LinkedList<Integer> result = new java.util.LinkedList<>();
+        for (int i = 0; i < upperBound; i++) {
+            result.add(i);
+        }
+
+        return result;
+    }
+
+    private list.LinkedList<Integer> getIncreasingLinkedList(final int upperBound) {
+        list.LinkedList<Integer> result = new list.LinkedList<>();
+        for (int i = 0; i < upperBound; i++) {
+            result.add(i);
+        }
+
+        return result;
+    }
+
+    private <T> void listsEqual(java.util.LinkedList<T> expected, list.LinkedList<T> actual) {
         Assert.assertEquals(expected.size(), actual.size());
         for (int i = 0; i < expected.size(); i++) {
             Assert.assertEquals(expected.get(i), actual.get(i));
@@ -15,13 +33,8 @@ public class LinkedListTest {
     @Test
     public void testGet() {
         final int nums = 5;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.add(i);
-            expected.add(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         Assert.assertEquals(expected.get(0), actual.get(0));
         Assert.assertEquals(expected.get(expected.size() - 1), actual.get(actual.size() - 1));
@@ -31,11 +44,7 @@ public class LinkedListTest {
     @Test
     public void testSize() {
         final int nums = 5;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.add(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
 
         Assert.assertEquals(5L, actual.size());
     }
@@ -43,13 +52,8 @@ public class LinkedListTest {
     @Test
     public void testAdd() {
         final int nums = 5;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.add(i);
-            expected.add(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         listsEqual(expected, actual);
     }
@@ -57,13 +61,8 @@ public class LinkedListTest {
     @Test
     public void testRemove() {
         final int nums = 8;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.add(i);
-            expected.add(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         actual.remove(0);
         expected.remove(0);
@@ -80,13 +79,8 @@ public class LinkedListTest {
     @Test
     public void testAddFirst() {
         final int nums = 8;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.addFirst(i);
-            expected.addFirst(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         listsEqual(expected, actual);
     }
@@ -94,13 +88,8 @@ public class LinkedListTest {
     @Test
     public void testAddLast() {
         final int nums = 8;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.addLast(i);
-            expected.addLast(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         listsEqual(expected, actual);
     }
@@ -108,13 +97,8 @@ public class LinkedListTest {
     @Test
     public void testRemoveFirst() {
         final int nums = 8;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.addLast(i);
-            expected.addLast(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         actual.removeFirst();
         expected.removeFirst();
@@ -125,13 +109,8 @@ public class LinkedListTest {
     @Test
     public void testRemoveLast() {
         final int nums = 8;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.addLast(i);
-            expected.addLast(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         actual.removeLast();
         expected.removeLast();
@@ -142,13 +121,8 @@ public class LinkedListTest {
     @Test
     public void testComposition() {
         final int nums = 8;
-        list.LinkedList<Integer> actual = new list.LinkedList<>();
-        java.util.LinkedList<Integer> expected = new java.util.LinkedList<>();
-
-        for (int i = 0; i < nums; i++) {
-            actual.add(i);
-            expected.add(i);
-        }
+        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
+        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         listsEqual(expected, actual);
 
@@ -178,8 +152,6 @@ public class LinkedListTest {
         actual.addLast(11);
         expected.addLast(11);
 
-        System.out.println(actual);
-        System.out.println(expected);
         listsEqual(expected, actual);
     }
 }
