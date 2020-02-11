@@ -2,21 +2,21 @@ package list;
 
 import common.Node;
 
-public class LinkedList<E> {
+public class LinkedList<T> {
 
-    private Node<E> head;
-    private Node<E> tail;
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
 
-    public LinkedList<E> addLast(E data) {
+    public LinkedList<T> addLast(T data) {
         if (this.head == null) {
-            this.head = new Node<E>(data);
+            this.head = new Node<T>(data);
         } else {
             if (this.tail == null) {
-                this.tail = new Node<E>(data);
+                this.tail = new Node<T>(data);
                 this.head.setNext(this.tail);
             } else {
-                this.tail.setNext(new Node<E>(data));
+                this.tail.setNext(new Node<T>(data));
                 this.tail = this.tail.getNext();
             }
         }
@@ -24,30 +24,30 @@ public class LinkedList<E> {
         return this;
     }
 
-    public LinkedList<E> addFirst(E data) {
+    public LinkedList<T> addFirst(T data) {
         if (this.head == null) {
-            this.head = new Node<E>(data);
+            this.head = new Node<T>(data);
         } else {
-            Node<E> tempHead = new Node<>(this.head);
-            this.head = new Node<E>(data);
+            Node<T> tempHead = new Node<>(this.head);
+            this.head = new Node<T>(data);
             this.head.setNext(tempHead);
         }
         this.size++;
         return this;
     }
 
-    public E removeFirst() {
+    public T removeFirst() {
         if (this.head == null) {
             return null;
         } else {
-            E data = this.head.getData();
+            T data = this.head.getData();
             this.head = this.head.getNext();
             this.size--;
             return data;
         }
     }
 
-    public E removeLast() {
+    public T removeLast() {
         if (this.head == null) {
             return null;
         } else {
@@ -59,12 +59,12 @@ public class LinkedList<E> {
         }
     }
 
-    public LinkedList<E> add(E data) {
+    public LinkedList<T> add(T data) {
         return addLast(data);
     }
 
-    public E get(long index) {
-        Node<E> copyHead = this.head;
+    public T get(long index) {
+        Node<T> copyHead = this.head;
         long i = 0;
         while (i < index && copyHead.getNext() != null) {
             copyHead = copyHead.getNext();
@@ -73,12 +73,12 @@ public class LinkedList<E> {
         return i == index ? copyHead.getData() : null;
     }
 
-    public E remove(long index) {
+    public T remove(long index) {
         if (index == 0) {
             return removeFirst();
         } else {
-            Node<E> copyHead = this.head;
-            Node<E> previous = copyHead;
+            Node<T> copyHead = this.head;
+            Node<T> previous = copyHead;
             long i = 0;
             while (i < index && copyHead.getNext() != null) {
                 previous = copyHead;
@@ -105,7 +105,7 @@ public class LinkedList<E> {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("[");
-        Node<E> copyHead = this.head;
+        Node<T> copyHead = this.head;
         while (copyHead != null) {
             result.append(copyHead.getNext() == null ? copyHead.getData() : copyHead.getData() + ", ");
             copyHead = copyHead.getNext();

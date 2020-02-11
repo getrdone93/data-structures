@@ -4,5 +4,5 @@
 .settings
 bin
 gradle/
-Playground
+Playground.java
 build
