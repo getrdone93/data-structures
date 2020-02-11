@@ -108,12 +108,14 @@ public class LinkedListTest {
 
     @Test
     public void testRemoveLast() {
-        final int nums = 8;
+        final int nums = 3;
         list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
         java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
-        actual.removeLast();
-        expected.removeLast();
+        for (int i = 0; i < nums; i++) {
+            actual.removeLast();
+            expected.removeLast();
+        }
 
         listsEqual(expected, actual);
     }

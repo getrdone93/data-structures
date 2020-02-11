@@ -23,6 +23,7 @@ public class Node<T> {
     public Node(Node<T> copy) {
         this.data = copy.getData();
         this.next = copy.getNext();
+        this.prev = copy.getPrev();
     }
 
     public T getData() {

@@ -15,8 +15,10 @@ public class LinkedList<T> {
             if (this.tail == null) {
                 this.tail = new Node<T>(data);
                 this.head.setNext(this.tail);
+                this.tail.setPrev(this.head);
             } else {
                 this.tail.setNext(new Node<T>(data));
+                this.tail.getNext().setPrev(this.tail);
                 this.tail = this.tail.getNext();
             }
         }
@@ -28,9 +30,8 @@ public class LinkedList<T> {
         if (this.head == null) {
             this.head = new Node<T>(data);
         } else {
-            Node<T> tempHead = new Node<>(this.head);
-            this.head = new Node<T>(data);
-            this.head.setNext(tempHead);
+            this.head = new Node<T>(data, new Node<>(this.head));
+            this.head.getNext().setPrev(this.head);
         }
         this.size++;
         return this;
@@ -42,6 +43,7 @@ public class LinkedList<T> {
         } else {
             T data = this.head.getData();
             this.head = this.head.getNext();
+            this.head.setPrev(null);
             this.size--;
             return data;
         }
@@ -54,7 +56,11 @@ public class LinkedList<T> {
             if (this.tail == null) {
                 return removeFirst();
             } else {
-                return this.remove(this.size - 1);
+                T data = this.tail.getData();
+                this.tail = this.tail.getPrev();
+                this.tail.setNext(null);
+                this.size--;
+                return data;
             }
         }
     }
@@ -76,6 +82,8 @@ public class LinkedList<T> {
     public T remove(long index) {
         if (index == 0) {
             return removeFirst();
+        } else if (index == this.size - 1) {
+            return removeLast();
         } else {
             Node<T> copyHead = this.head;
             Node<T> previous = copyHead;
