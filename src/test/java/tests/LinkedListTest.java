@@ -78,42 +78,56 @@ public class LinkedListTest {
 
     @Test
     public void testAddFirst() {
-        final int nums = 8;
-        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
-        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
+        final int nums = 3;
+        list.LinkedList<Integer> actual = new list.LinkedList<Integer>();
+        java.util.LinkedList<Integer> expected = new java.util.LinkedList<Integer>();
+
+        for (int i = 0; i < nums; i++) {
+            actual.addFirst(i);
+            expected.addFirst(i);
+        }
 
         listsEqual(expected, actual);
     }
 
     @Test
     public void testAddLast() {
-        final int nums = 8;
-        list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
-        java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
+        final int nums = 3;
+        list.LinkedList<Integer> actual = new list.LinkedList<Integer>();
+        java.util.LinkedList<Integer> expected = new java.util.LinkedList<Integer>();
+
+        for (int i = 0; i < nums; i++) {
+            actual.addLast(i);
+            expected.addLast(i);
+        }
 
         listsEqual(expected, actual);
     }
 
     @Test
     public void testRemoveFirst() {
-        final int nums = 8;
+        final int nums = 3;
         list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
         java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
-        actual.removeFirst();
-        expected.removeFirst();
+        for (int i = 0; i < nums; i++) {
+            actual.removeFirst();
+            expected.removeFirst();
+        }
 
         listsEqual(expected, actual);
     }
 
     @Test
     public void testRemoveLast() {
-        final int nums = 8;
+        final int nums = 3;
         list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
         java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
-        actual.removeLast();
-        expected.removeLast();
+        for (int i = 0; i < nums; i++) {
+            actual.removeLast();
+            expected.removeLast();
+        }
 
         listsEqual(expected, actual);
     }
