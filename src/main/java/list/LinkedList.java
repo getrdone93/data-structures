@@ -8,9 +8,9 @@ public class LinkedList<T> {
     private Node<T> tail;
     private int size;
 
-    public LinkedList<T> addLast(T data) {
+    public LinkedList<T> addLast(final T data) {
         if (this.head == null) {
-            this.head = new Node<T>(data);
+            return addFirst(data);
         } else {
             if (this.tail == null) {
                 this.tail = new Node<T>(data);
@@ -18,7 +18,8 @@ public class LinkedList<T> {
                 this.tail.setPrev(this.head);
             } else {
                 this.tail.setNext(new Node<T>(data));
-                this.tail.getNext().setPrev(this.tail);
+                Node<T> tempTail = this.tail;
+                this.tail.getNext().setPrev(tempTail);
                 this.tail = this.tail.getNext();
             }
         }
@@ -26,9 +27,13 @@ public class LinkedList<T> {
         return this;
     }
 
-    public LinkedList<T> addFirst(T data) {
+    public LinkedList<T> addFirst(final T data) {
         if (this.head == null) {
-            this.head = new Node<T>(data);
+            this.head = new Node<T>(data, this.tail);
+        } else if (this.head.getNext() == null) {
+            this.tail = new Node<T>(this.head.getData());
+            this.head = new Node<T>(data, this.tail);
+            this.tail.setPrev(this.head);
         } else {
             this.head = new Node<T>(data, new Node<>(this.head));
             this.head.getNext().setPrev(this.head);
@@ -42,8 +47,18 @@ public class LinkedList<T> {
             return null;
         } else {
             T data = this.head.getData();
-            this.head = this.head.getNext();
-            this.head.setPrev(null);
+            if (this.head.getNext() == null) {
+                this.head = null;
+            } else {
+                if (this.head.getNext().getNext() == null) {
+                    this.head = this.tail;
+                    this.head.setPrev(null);
+                    this.tail = null;
+                } else {
+                    this.head = this.head.getNext();
+                    this.head.setPrev(null);
+                }
+            }
             this.size--;
             return data;
         }
@@ -57,52 +72,113 @@ public class LinkedList<T> {
                 return removeFirst();
             } else {
                 T data = this.tail.getData();
-                this.tail = this.tail.getPrev();
-                this.tail.setNext(null);
+                if (this.tail.getPrev().getPrev() == null) {
+                    this.tail = null;
+                    this.head.setNext(null);
+                } else {
+                    this.tail = this.tail.getPrev();
+                    this.tail.setNext(null);
+                }
+
                 this.size--;
                 return data;
             }
         }
     }
 
-    public LinkedList<T> add(T data) {
+    public LinkedList<T> add(final T data) {
         return addLast(data);
     }
 
-    public T get(long index) {
-        Node<T> copyHead = this.head;
-        long i = 0;
-        while (i < index && copyHead.getNext() != null) {
-            copyHead = copyHead.getNext();
-            i++;
+    private Node<T> getNode(final int index) {
+        if (validIndex(index)) {
+            boolean startHead = index < this.size / 2;
+            if (startHead) {
+                int i = 0;
+                Node<T> startNode = this.head;
+                while (i < index && startNode.getNext() != null) {
+                    startNode = startNode.getNext();
+                    i++;
+                }
+                return i == index ? startNode : null;
+            } else {
+                int i = this.size - 1;
+                Node<T> startNode = this.tail;
+                while (i > index && startNode.getPrev() != null) {
+                    startNode = startNode.getPrev();
+                    i--;
+                }
+                return i == index ? startNode : null;
+            }
         }
-        return i == index ? copyHead.getData() : null;
+        return null;
     }
 
-    public T remove(long index) {
-        if (index == 0) {
-            return removeFirst();
-        } else if (index == this.size - 1) {
-            return removeLast();
-        } else {
-            Node<T> copyHead = this.head;
-            Node<T> previous = copyHead;
-            long i = 0;
-            while (i < index && copyHead.getNext() != null) {
-                previous = copyHead;
-                copyHead = copyHead.getNext();
-                i++;
-            }
-            if (i == index && copyHead != null) {
-                previous.setNext(copyHead.getNext());
-                if (index == this.size - 1) {
-                    this.tail = previous;
+    public boolean validIndex(final int index) {
+        return index > -1 && index < this.size;
+    }
+
+    public T get(final int index) {
+        final Node<T> node = getNode(index);
+        return node == null ? null : node.getData();
+    }
+
+    public T remove(final int index) {
+        if (validIndex(index)) {
+            if (this.head == null) {
+                return null;
+            } else if (this.tail == null) {
+                if (index == 0) {
+                    return removeFirst();
                 }
+            } else if (this.head.getNext().getNext() == null) {
+                if (index == 0) {
+                    return removeFirst();
+                } else if (index == 1) {
+                    return removeLast();
+                }
+            } else if (this.head.getNext().getNext().getNext() == null) {
+                if (index == 0) {
+                    return removeFirst();
+                } else if (index == 1) {
+                    T data = this.head.getNext().getData();
+                    this.head.setNext(this.tail);
+                    this.tail.setPrev(this.head);
+                    this.size--;
+                    return data;
+                } else if (index == 2) {
+                    return removeLast();
+                }
+            }
+            if (index == 0) {
+                return removeFirst();
+            } else if (index == this.size - 1) {
+                return removeLast();
+            } else if (index == 1) {
+                Node<T> removeNode = this.head.getNext();
+                this.head.setNext(removeNode.getNext());
+                this.head.getNext().setPrev(this.head);
                 this.size--;
-                return copyHead.getData();
+                return removeNode.getData();
+            } else if (index == this.size - 2) {
+                Node<T> removeNode = this.tail.getPrev();
+                this.tail.setPrev(removeNode.getPrev());
+                this.tail.getPrev().setNext(this.tail);
+                this.size--;
+                return removeNode.getData();
+            } else {
+                Node<T> removeNode = getNode(index);
+                if (removeNode == null) {
+                    return null;
+                }
+                Node<T> beforeNode = removeNode.getPrev();
+                Node<T> afterNode = removeNode.getNext();
+                beforeNode.setNext(afterNode);
+                afterNode.setPrev(beforeNode);
+                this.size--;
+                return removeNode.getData();
             }
         }
-
         return null;
     }
 

@@ -67,8 +67,12 @@ public class LinkedListTest {
         actual.remove(0);
         expected.remove(0);
 
+        listsEqual(expected, actual);
+
         actual.remove(actual.size() - 1);
         expected.remove(expected.size() - 1);
+
+        listsEqual(expected, actual);
 
         actual.remove(actual.size() / 2);
         expected.remove(expected.size() / 2);

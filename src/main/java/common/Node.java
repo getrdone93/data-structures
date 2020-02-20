@@ -6,6 +6,10 @@ public class Node<T> {
     private Node<T> next;
     private Node<T> prev;
 
+    public Node() {
+
+    }
+
     public Node(final T data) {
         this(data, null);
     }
