@@ -123,61 +123,53 @@ public class LinkedList<T> {
         return node == null ? null : node.getData();
     }
 
+    
     public T remove(final int index) {
         if (validIndex(index)) {
-            if (this.head == null) {
-                return null;
-            } else if (this.tail == null) {
-                if (index == 0) {
-                    return removeFirst();
-                }
-            } else if (this.head.getNext().getNext() == null) {
-                if (index == 0) {
-                    return removeFirst();
-                } else if (index == 1) {
+            if (index == 0) {
+                return removeFirst();
+            } else if (index == 1) {
+                if (this.head == null || this.tail == null) {
+                    return null;
+                } else if (this.head.getNext().getNext() == null) {
                     return removeLast();
-                }
-            } else if (this.head.getNext().getNext().getNext() == null) {
-                if (index == 0) {
-                    return removeFirst();
-                } else if (index == 1) {
+                } else if (this.head.getNext().getNext().getNext() == null) {
                     T data = this.head.getNext().getData();
                     this.head.setNext(this.tail);
                     this.tail.setPrev(this.head);
                     this.size--;
                     return data;
-                } else if (index == 2) {
-                    return removeLast();
                 }
-            }
-            if (index == 0) {
-                return removeFirst();
-            } else if (index == this.size - 1) {
-                return removeLast();
-            } else if (index == 1) {
                 Node<T> removeNode = this.head.getNext();
                 this.head.setNext(removeNode.getNext());
                 this.head.getNext().setPrev(this.head);
                 this.size--;
                 return removeNode.getData();
             } else if (index == this.size - 2) {
+                if (this.head == null || this.tail == null) {
+                    return null;
+                } else if (this.head.getNext().getNext() == null 
+                        || this.head.getNext().getNext().getNext() == null) {
+                    return removeLast();
+                }
                 Node<T> removeNode = this.tail.getPrev();
                 this.tail.setPrev(removeNode.getPrev());
                 this.tail.getPrev().setNext(this.tail);
                 this.size--;
                 return removeNode.getData();
-            } else {
-                Node<T> removeNode = getNode(index);
-                if (removeNode == null) {
-                    return null;
-                }
-                Node<T> beforeNode = removeNode.getPrev();
-                Node<T> afterNode = removeNode.getNext();
-                beforeNode.setNext(afterNode);
-                afterNode.setPrev(beforeNode);
-                this.size--;
-                return removeNode.getData();
+            } else if (index == this.size - 1) {
+                return removeLast();
             }
+            Node<T> removeNode = getNode(index);
+            if (removeNode == null) {
+                return null;
+            }
+            Node<T> beforeNode = removeNode.getPrev();
+            Node<T> afterNode = removeNode.getNext();
+            beforeNode.setNext(afterNode);
+            afterNode.setPrev(beforeNode);
+            this.size--;
+            return removeNode.getData();
         }
         return null;
     }
