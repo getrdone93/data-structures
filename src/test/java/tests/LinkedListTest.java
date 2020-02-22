@@ -60,23 +60,28 @@ public class LinkedListTest {
 
     @Test
     public void testRemove() {
-        final int nums = 8;
+        final int nums = 12;
         list.LinkedList<Integer> actual = getIncreasingLinkedList(nums);
         java.util.LinkedList<Integer> expected = getIncreasingJavaLinkedList(nums);
 
         actual.remove(0);
         expected.remove(0);
+        listsEqual(expected, actual);
 
+        actual.remove(1);
+        expected.remove(1);
         listsEqual(expected, actual);
 
         actual.remove(actual.size() - 1);
         expected.remove(expected.size() - 1);
+        listsEqual(expected, actual);
 
+        actual.remove(actual.size() - 2);
+        expected.remove(expected.size() - 2);
         listsEqual(expected, actual);
 
         actual.remove(actual.size() / 2);
         expected.remove(expected.size() / 2);
-
         listsEqual(expected, actual);
     }
 
@@ -146,30 +151,26 @@ public class LinkedListTest {
 
         actual.removeFirst();
         expected.removeFirst();
-
         listsEqual(expected, actual);
 
         actual.removeLast();
         expected.removeLast();
-
         listsEqual(expected, actual);
 
         actual.remove(actual.size() / 2);
         expected.remove(expected.size() / 2);
-
         listsEqual(expected, actual);
 
         actual.addFirst(3);
         expected.addFirst(3);
-
         listsEqual(expected, actual);
 
         actual.addLast(10);
         expected.addLast(10);
+        listsEqual(expected, actual);
 
         actual.addLast(11);
         expected.addLast(11);
-
         listsEqual(expected, actual);
     }
 }

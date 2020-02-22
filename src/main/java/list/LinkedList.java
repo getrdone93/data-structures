@@ -123,7 +123,6 @@ public class LinkedList<T> {
         return node == null ? null : node.getData();
     }
 
-    
     public T remove(final int index) {
         if (validIndex(index)) {
             if (index == 0) {
@@ -148,8 +147,7 @@ public class LinkedList<T> {
             } else if (index == this.size - 2) {
                 if (this.head == null || this.tail == null) {
                     return null;
-                } else if (this.head.getNext().getNext() == null 
-                        || this.head.getNext().getNext().getNext() == null) {
+                } else if (this.head.getNext().getNext() == null || this.head.getNext().getNext().getNext() == null) {
                     return removeLast();
                 }
                 Node<T> removeNode = this.tail.getPrev();
